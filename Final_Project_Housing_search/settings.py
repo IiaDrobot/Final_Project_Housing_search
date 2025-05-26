@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     #local
     'apps.users.apps.UsersConfig',
     'apps.listings.apps.ListingsConfig',
-    'apps.booking.apps.BookingConfig'
+    'apps.booking.apps.BookingConfig',
+    'apps.reviews.apps.ReviewsConfig',
 ]
 
 
