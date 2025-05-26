@@ -1,5 +1,8 @@
 from enum import Enum
 
+from django.conf.global_settings import ADMINS
+
+
 class RoleType(str, Enum):
     ADMIN = "Администратор"
     MODERATOR = "Модератор"

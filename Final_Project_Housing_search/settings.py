@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     #local
     'apps.users.apps.UsersConfig',
     'apps.listings.apps.ListingsConfig',
+    'apps.booking.apps.BookingConfig'
 ]
 
 
@@ -69,6 +70,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Final_Project_Housing_search.urls'
 
+AUTH_USER_MODEL = 'users.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -154,7 +156,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.User'
+
 
 
 REST_FRAMEWORK = {
