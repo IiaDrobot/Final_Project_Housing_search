@@ -16,10 +16,19 @@ class ListingListCreateView(generics.ListCreateAPIView):
     serializer_class = ListingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter,
+                       filters.OrderingFilter]
     filterset_class = ListingFilter
     search_fields = ['title', 'description']
     ordering_fields = ['price', 'created_at']
+
+    def get_queryset(self):
+        queryset = Listing.objects.all()
+        owner_param = self.request.query_params.get('owner')
+        if owner_param == 'me' and self.request.user.is_authenticated:
+            queryset = queryset.filter(owner=self.request.user)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

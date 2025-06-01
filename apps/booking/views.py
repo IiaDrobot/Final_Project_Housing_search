@@ -24,7 +24,8 @@ class BookingViewSet(viewsets.ModelViewSet):
         return {'request': self.request}
 
     def perform_create(self, serializer):
-        serializer.save()  # tenant устанавливается в сериализаторе
+        serializer.save(tenant=self.request.user)
+
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def confirm(self, request, pk=None):
@@ -58,7 +59,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         if request.user != booking.tenant:
             return Response({'error': 'Вы не арендатор этой брони.'}, status=status.HTTP_403_FORBIDDEN)
 
-        if booking.status != Booking.Status.PENDING:
+        if booking.status not in (Booking.Status.PENDING,Booking.Status.CONFIRMED) :
             return Response({'error': 'Можно отменить только заявки в ожидании.'}, status=status.HTTP_400_BAD_REQUEST)
 
         if booking.start_date - now().date() < timedelta(days=2):

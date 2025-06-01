@@ -8,3 +8,4 @@ router.register(r'bookings', BookingViewSet, basename='booking')
 urlpatterns = [
     path('', include(router.urls)),
 ]
+

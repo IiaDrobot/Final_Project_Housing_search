@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-from apps.listings.models import Listing # Импортируем модель объявления
+from apps.listings.models import Listing
+from django.utils import timezone
 
 
 class Booking(models.Model):
@@ -21,7 +22,7 @@ class Booking(models.Model):
         default=Status.PENDING
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.listing.title} — {self.tenant.username} ({self.start_date} → {self.end_date})"

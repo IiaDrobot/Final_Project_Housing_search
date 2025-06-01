@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from .models import Review
 from apps.booking.models import Booking
+from django.utils import timezone
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,19 +12,21 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['reviewer'] = self.context['request'].user
-        return super().create(validated_data)
+        review = super().create(validated_data)
 
+        review.listing.update_average_rating()
 
+        return review
 
     def validate(self, data):
         user = self.context['request'].user
         listing = data['listing']
 
         has_booking = Booking.objects.filter(
-            user=user,
+            tenant=user,
             listing=listing,
             status='confirmed',
-            end_date__lt=timezone.now()
+           #end_date__lt=timezone.now()
         ).exists()
 
         if not has_booking:

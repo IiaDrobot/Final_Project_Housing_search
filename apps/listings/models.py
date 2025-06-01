@@ -40,7 +40,7 @@ class Listing(models.Model):
         self.save(update_fields=['view_count'])
 
     def update_average_rating(self):
-        from apps.reviews.models import Review  # избегаем циклического импорта
+        from apps.reviews.models import Review
         avg = Review.objects.filter(listing=self).aggregate(avg=Avg('rating'))['avg'] or 0.0
         self.average_rating = round(avg, 1)
         self.save()
