@@ -8,6 +8,7 @@ from .serializers import ListingSerializer,ListingViewHistorySerializer
 from .filters import ListingFilter
 from .models import Listing, ListingViewHistory
 from django.utils import timezone
+from .permissions import IsOwnerOrReadOnly
 
 
 
@@ -37,7 +38,7 @@ class ListingListCreateView(generics.ListCreateAPIView):
 class ListingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
 
 
 @api_view(['GET'])
