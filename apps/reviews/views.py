@@ -15,4 +15,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
         return self.queryset
 
     def perform_create(self, serializer):
-        serializer.save()
+        user = self.request.user
+        listing = serializer.validated_data.get('listing')
+       # serializer.save()

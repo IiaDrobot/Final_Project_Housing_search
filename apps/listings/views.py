@@ -49,7 +49,6 @@ def view_listing(request, pk):
         listing.save(update_fields=['view_count'])
         listing.refresh_from_db()
 
-
         if request.user.is_authenticated:
             ListingViewHistory.objects.update_or_create(
                 user=request.user,
