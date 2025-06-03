@@ -22,7 +22,7 @@ class ListingListCreateView(generics.ListCreateAPIView):
                        filters.OrderingFilter]
     filterset_class = ListingFilter
     search_fields = ['title', 'description']
-    ordering_fields = ['price', 'created_at']
+    ordering_fields = ['price', 'created_at', 'view_count']
 
     def get_queryset(self):
         queryset = Listing.objects.all()
