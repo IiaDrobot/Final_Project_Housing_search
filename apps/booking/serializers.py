@@ -29,10 +29,10 @@ class BookingSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Жильё уже забронировано на указанные даты.")
 
             today = timezone.now().date()
-           # if (start - today).days < 2:
-            #    raise serializers.ValidationError("Бронирование возможно минимум за 2 дня до заезда.")
+            if (start - today).days < 2:
+                raise serializers.ValidationError("Бронирование возможно минимум за 2 дня до заезда.")
 
-        return data
+            return data
 
 
     def create(self, validated_data):
